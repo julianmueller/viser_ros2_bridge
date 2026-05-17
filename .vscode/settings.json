@@ -1,0 +1,17 @@
+{
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.rulers": [
+            120
+        ],
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.defaultFormatter": "charliermarsh.ruff",
+    },
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}"
+    ],
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python",
+    "autoDocstring.docstringFormat": "sphinx-notypes",
+    "todo-tree.tree.scanMode": "current file",
+    "editor.detectIndentation": false
+}
