@@ -1,20 +1,75 @@
-# Module Template
+# Viser ROS2 Utils
 
-This is a template for a module repository. A Module is considered to follow these rules:
+[Viser](https://viser.studio/main) is a 3D visualization library for computer vision and robotics in Python. This package adds a small ROS2 bridge node plus lightweight conversion helpers for displaying common ROS messages in a viser scene.
 
-- This repo is a ros2 package. [See below](#setup-of-the-ros2-package)
-- It mainly contains scripts, meshes, launch files, configs, URDF/SRDF xacro macros, that are then used within an applications.
-- This repository will be addedd to applications as a submodule.
-- Launch files for testing the functionality of this module are welcome.
-- Also documentation, that is inherent to this module can be included in this README and in the doc folder, like specific coordinate frames etc.
+## File structure
 
-You can delete these infos if you dont need them anymore. You can always revisit them in the [Wiki](https://gitlab.lrz.de/groups/iwb-tgmr-ros2/-/wikis/home).
+- `viser_ros2_utils/node.py`: `ViserROS2Bridge`, the ROS2 node that owns the `viser.ViserServer`, subscriptions, services, and manual visualization methods.
+- `viser_ros2_utils/geometry.py`: lightweight geometry conversions that return viser-ready `position`, `wxyz`, color, and arrow data.
+- `viser_ros2_utils/tf2.py`: TF message conversions to parent frame, child frame, `position`, and `wxyz` data.
+- `viser_ros2_utils/sensors.py`: `Image` and `PointCloud2` conversions to NumPy image, point, and color arrays.
+- `viser_ros2_utils/meshes.py`: `shape_msgs/Mesh` and mesh file conversions to vertex/face or trimesh data.
+- `viser_ros2_utils/markers.py`: `visualization_msgs/Marker` and `MarkerArray` conversions to viser scene specs.
+- `viser_ros2_utils/scene.py`: viser scene and handle manipulation helpers used by the node.
 
-## Setup of the ROS2 Package
+## Quick start
 
-First you need to create the ros2 workspace with the source folder. Then you create the ros2 package. Then you clone the newly created repository (from the module-template) into this package. A tutorial can be found here: [Create a new ROS2 pkg as a repo](https://gitlab.lrz.de/groups/iwb-tgmr-ros2/-/wikis/Creating-a-new-Repository#new-repository-with-ros2-package). Then you push the changes to the module repository.
+```bash
+ros2 run viser_ros2_utils viser_bridge
+```
 
-## References
+The bridge starts a viser server on `http://0.0.0.0:8080`, listens to `/tf` and `/tf_static`, and exposes `~/clear` and `~/republish` services.
 
-- [TGMR ROS2 Wiki](https://gitlab.lrz.de/groups/iwb-tgmr-ros2/-/wikis/home).
-- [ROS2 Jazzy Wiki: Creating a package](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html)
+```python
+from viser_ros2_utils import ViserROS2Bridge
+
+node = ViserROS2Bridge(host='0.0.0.0', port=8080)
+node.subscribe_topic('/camera/color/image_raw', 'sensor_msgs/msg/Image', render_width=0.8)
+node.subscribe_topic('/camera/points', 'sensor_msgs/msg/PointCloud2', point_size=0.003, max_points=200_000)
+node.subscribe_topic('/viser/markers', 'visualization_msgs/msg/MarkerArray')
+
+# Manual visualization is also available.
+node.show_pose('target_pose', pose_stamped)
+node.show_point_cloud('debug_cloud', xyz_rgb_array)
+```
+
+Conversions use NumPy as the intermediate representation before the node updates viser handles. Repeated calls with the same scene name update the existing object instead of creating duplicates.
+
+## Examples
+
+The examples package mirrors the `rviz2_utils` structure: every datatype module has a `create(...)` function, while `viser_ros2_utils/examples/__init__.py` owns the CLI.
+
+```bash
+ros2 run viser_ros2_utils examples --all
+ros2 run viser_ros2_utils examples marker_array_topic --topic /viser/markers
+```
+
+Manual examples are split into `pose`, `point`, `vector3`, `transform`, `image`, `point_cloud`, `mesh`, `marker`, and `marker_array`. The `marker_array_topic` example only subscribes to the topic; publish the `visualization_msgs/msg/MarkerArray` content separately.
+
+## Install
+
+Create a virtual environment:
+
+```bash
+python3 -m venv --system-site-packages .venv
+source .venv/bin/activate
+```
+
+Install python dependencies from `requirements.txt`:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+Expose the venv packages to ros2 before starting the bridge:
+
+```bash
+source install/setup.bash
+export PYTHONPATH=.venv/lib/python3.12/site-packages:$PYTHONPATH
+```
+
+Run the Bridge:
+
+```bash
+ros2 run viser_ros2_utils viser_bridge
+```

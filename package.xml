@@ -3,9 +3,23 @@
 <package format="3">
   <name>viser_ros2_utils</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ROS2 utilities for displaying common ROS data in viser.</description>
   <maintainer email="julian.mueller@iwb.tum.de">jmueller</maintainer>
   <license>Apache-2.0</license>
+
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-trimesh</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>rviz2_utils</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>sensor_msgs_py</exec_depend>
+  <exec_depend>shape_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
+  <exec_depend>tf2_utils</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
