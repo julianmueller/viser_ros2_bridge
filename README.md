@@ -4,24 +4,24 @@
 
 ## File structure
 
-- `viser_ros2_utils/node.py`: `ViserROS2Bridge`, the ROS2 node that owns the `viser.ViserServer`, subscriptions, services, and manual visualization methods.
-- `viser_ros2_utils/geometry.py`: lightweight geometry conversions that return viser-ready `position`, `wxyz`, color, and arrow data.
-- `viser_ros2_utils/tf2.py`: TF message conversions to parent frame, child frame, `position`, and `wxyz` data.
-- `viser_ros2_utils/sensors.py`: `Image` and `PointCloud2` conversions to NumPy image, point, and color arrays.
-- `viser_ros2_utils/meshes.py`: `shape_msgs/Mesh` and mesh file conversions to vertex/face or trimesh data.
-- `viser_ros2_utils/markers.py`: `visualization_msgs/Marker` and `MarkerArray` conversions to viser scene specs.
-- `viser_ros2_utils/scene.py`: viser scene and handle manipulation helpers used by the node.
+- `viser_ros2_bridge/node.py`: `ViserROS2Bridge`, the ROS2 node that owns the `viser.ViserServer`, subscriptions, services, and manual visualization methods.
+- `viser_ros2_bridge/geometry.py`: lightweight geometry conversions that return viser-ready `position`, `wxyz`, color, and arrow data.
+- `viser_ros2_bridge/tf2.py`: TF message conversions to parent frame, child frame, `position`, and `wxyz` data.
+- `viser_ros2_bridge/sensors.py`: `Image` and `PointCloud2` conversions to NumPy image, point, and color arrays.
+- `viser_ros2_bridge/meshes.py`: `shape_msgs/Mesh` and mesh file conversions to vertex/face or trimesh data.
+- `viser_ros2_bridge/markers.py`: `visualization_msgs/Marker` and `MarkerArray` conversions to viser scene specs.
+- `viser_ros2_bridge/scene.py`: viser scene and handle manipulation helpers used by the node.
 
 ## Quick start
 
 ```bash
-ros2 run viser_ros2_utils viser_bridge
+ros2 run viser_ros2_bridge viser_bridge
 ```
 
 The bridge starts a viser server on `http://0.0.0.0:8080`, listens to `/tf` and `/tf_static`, and exposes `~/clear` and `~/republish` services.
 
 ```python
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 node = ViserROS2Bridge(host='0.0.0.0', port=8080)
 node.subscribe_topic('/camera/color/image_raw', 'sensor_msgs/msg/Image', render_width=0.8)
@@ -37,11 +37,11 @@ Conversions use NumPy as the intermediate representation before the node updates
 
 ## Examples
 
-The examples package mirrors the `rviz2_utils` structure: every datatype module has a `create(...)` function, while `viser_ros2_utils/examples/__init__.py` owns the CLI.
+The examples package mirrors the `rviz2_utils` structure: every datatype module has a `create(...)` function, while `viser_ros2_bridge/examples/__init__.py` owns the CLI.
 
 ```bash
-ros2 run viser_ros2_utils examples --all
-ros2 run viser_ros2_utils examples marker_array_topic --topic /viser/markers
+ros2 run viser_ros2_bridge examples --all
+ros2 run viser_ros2_bridge examples marker_array_topic --topic /viser/markers
 ```
 
 Manual examples are split into `pose`, `point`, `vector3`, `transform`, `image`, `point_cloud`, `mesh`, `marker`, and `marker_array`. The `marker_array_topic` example only subscribes to the topic; publish the `visualization_msgs/msg/MarkerArray` content separately.
@@ -71,5 +71,5 @@ export PYTHONPATH=.venv/lib/python3.12/site-packages:$PYTHONPATH
 Run the Bridge:
 
 ```bash
-ros2 run viser_ros2_utils viser_bridge
+ros2 run viser_ros2_bridge viser_bridge
 ```

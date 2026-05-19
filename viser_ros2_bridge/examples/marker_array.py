@@ -6,7 +6,7 @@ from geometry_msgs.msg import Point, Pose, Vector3
 from rviz2_utils import markers as rviz_markers
 from std_msgs.msg import ColorRGBA
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

@@ -7,7 +7,7 @@ from rviz2_utils import markers as rviz_markers
 from std_msgs.msg import ColorRGBA
 from visualization_msgs.msg import Marker
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

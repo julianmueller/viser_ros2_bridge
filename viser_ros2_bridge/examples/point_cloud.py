@@ -6,7 +6,7 @@ import numpy as np
 from sensor_msgs_py import point_cloud2
 from std_msgs.msg import Header
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 from sensor_msgs.msg import Image
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

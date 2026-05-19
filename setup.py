@@ -3,7 +3,7 @@ from pathlib import Path
 
 from setuptools import find_packages, setup
 
-package_name = "viser_ros2_utils"
+package_name = "viser_ros2_bridge"
 
 
 def get_data_files(folder: str, file_endings: Sequence[str] = [""]) -> tuple[str, list[str]]:
@@ -38,8 +38,8 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "viser_bridge = viser_ros2_utils.node:main",
-            "examples = viser_ros2_utils.examples:main",
+            "viser_bridge = viser_ros2_bridge.node:main",
+            "examples = viser_ros2_bridge.examples:main",
         ],
     },
 )

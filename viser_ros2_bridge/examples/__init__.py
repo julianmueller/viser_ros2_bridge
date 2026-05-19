@@ -1,4 +1,4 @@
-"""Command line examples for viser_ros2_utils."""
+"""Command line examples for viser_ros2_bridge."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ import time
 
 import rclpy
 
-from viser_ros2_utils import ViserROS2Bridge
-from viser_ros2_utils.examples import (
+from viser_ros2_bridge import ViserROS2Bridge
+from viser_ros2_bridge.examples import (
     image,
     marker,
     marker_array,
@@ -46,8 +46,8 @@ def create_all(node: ViserROS2Bridge, frame: str) -> None:
 
 
 def main() -> None:
-    """Run one viser_ros2_utils example."""
-    parser = argparse.ArgumentParser(description="Display viser_ros2_utils examples.")
+    """Run one viser_ros2_bridge example."""
+    parser = argparse.ArgumentParser(description="Display viser_ros2_bridge examples.")
     parser.add_argument("example", nargs="?", choices=sorted(EXAMPLES), help="Example to display.")
     parser.add_argument("--all", action="store_true", help="Display all manual datatype examples.")
     parser.add_argument("--host", default="0.0.0.0", help="viser server host address.")

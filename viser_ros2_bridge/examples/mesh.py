@@ -6,7 +6,7 @@ import numpy as np
 from geometry_msgs.msg import Point, Pose
 from shape_msgs.msg import Mesh, MeshTriangle
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

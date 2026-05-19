@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from geometry_msgs.msg import Vector3
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 
 def create(node: ViserROS2Bridge, frame: str) -> None:

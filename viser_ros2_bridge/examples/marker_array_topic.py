@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from visualization_msgs.msg import MarkerArray
 
-from viser_ros2_utils import ViserROS2Bridge
+from viser_ros2_bridge import ViserROS2Bridge
 
 MARKER_ARRAY_TOPIC = "/rviz2_utils/markers"
 
